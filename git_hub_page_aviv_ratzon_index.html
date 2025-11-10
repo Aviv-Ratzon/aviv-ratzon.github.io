@@ -1,0 +1,283 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Aviv Ratzon — Computational & Theoretical Neuroscience</title>
+  <meta name="description" content="Aviv Ratzon — PhD candidate in Computational & Theoretical Neuroscience at Technion. Researching representational drift, noisy learning, and forming of neural representations." />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&family=Raleway:wght@600;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg: #0b0f17;
+      --card: #121826;
+      --muted: #9fb0d2;
+      --text: #e6eefc;
+      --accent: #5da9ff;
+      --accent-2: #7de2d1;
+      --ring: #2a6df6;
+    }
+    @media (prefers-color-scheme: light) {
+      :root {
+        --bg: #f7f9fc;
+        --card: #ffffff;
+        --muted: #5b6b84;
+        --text: #0b1220;
+        --accent: #1b6bff;
+        --accent-2: #06b6d4;
+        --ring: #94b4ff;
+      }
+    }
+    * { box-sizing: border-box; }
+    html, body { margin: 0; padding: 0; }
+    body {
+      font-family: 'Inter', system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, 'Apple Color Emoji', 'Segoe UI Emoji';
+      background: radial-gradient(1200px 600px at 80% -10%, rgba(93,169,255,.18), transparent 60%),
+                  radial-gradient(1200px 600px at -10% 20%, rgba(125,226,209,.12), transparent 60%),
+                  var(--bg);
+      color: var(--text);
+      line-height: 1.6;
+    }
+    a { color: var(--accent); text-decoration: none; }
+    a:hover { text-decoration: underline; }
+    .wrap { max-width: 1100px; margin: 0 auto; padding: 28px 20px 60px; }
+    header {
+      position: sticky; top: 0; z-index: 10;
+      backdrop-filter: saturate(180%) blur(10px);
+      background: color-mix(in hsl, var(--bg), transparent 70%);
+      border-bottom: 1px solid color-mix(in hsl, var(--text), transparent 92%);
+    }
+    .nav {
+      display: flex; align-items: center; gap: 16px; justify-content: space-between;
+      max-width: 1100px; margin: 0 auto; padding: 12px 20px;
+    }
+    .brand { display: flex; align-items: baseline; gap: 10px; }
+    .brand h1 { font-family: Raleway, Inter, sans-serif; font-size: 20px; margin: 0; letter-spacing: .3px; }
+    .brand .tag { color: var(--muted); font-size: 14px; }
+    .links a { margin-left: 14px; font-size: 14px; color: var(--muted); }
+    .hero { display: grid; grid-template-columns: 1.2fr .8fr; gap: 26px; align-items: center; padding-top: 28px; }
+    .card { background: color-mix(in hsl, var(--card), transparent 0%); border: 1px solid color-mix(in hsl, var(--text), transparent 90%); border-radius: 18px; padding: 22px 22px; box-shadow: 0 10px 30px rgba(0,0,0,.18); }
+    .hero h2 { font-family: Raleway, Inter, sans-serif; font-weight: 700; font-size: 34px; line-height: 1.2; margin: 0 0 10px; letter-spacing: .2px; }
+    .hero p.lead { font-size: 17px; color: var(--muted); margin: 0; }
+    .contact { display: grid; gap: 10px; }
+    .chip {
+      display: inline-flex; align-items: center; gap: 10px; padding: 8px 12px; border-radius: 999px;
+      background: color-mix(in hsl, var(--card), transparent 15%);
+      border: 1px solid color-mix(in hsl, var(--text), transparent 85%);
+      font-size: 14px; color: var(--text);
+    }
+    .grid { display: grid; grid-template-columns: repeat(12, 1fr); gap: 16px; margin-top: 28px; }
+    .col-8 { grid-column: span 8; }
+    .col-4 { grid-column: span 4; }
+    @media (max-width: 900px) {
+      .hero { grid-template-columns: 1fr; }
+      .col-8, .col-4 { grid-column: 1 / -1; }
+    }
+    h3.section { font-family: Raleway, Inter, sans-serif; font-size: 22px; margin: 26px 0 10px; letter-spacing: .3px; }
+    .list { display: grid; gap: 12px; }
+    .item { padding: 14px 16px; border: 1px solid color-mix(in hsl, var(--text), transparent 90%); background: color-mix(in hsl, var(--card), transparent 0%); border-radius: 14px; }
+    .item h4 { margin: 0 0 4px; font-size: 16px; }
+    .meta { font-size: 13px; color: var(--muted); }
+    .pill { display: inline-block; padding: 4px 8px; border-radius: 999px; border: 1px solid color-mix(in hsl, var(--text), transparent 80%); font-size: 12px; margin: 4px 6px 0 0; color: var(--muted); }
+    .footer { margin-top: 40px; font-size: 13px; color: var(--muted); text-align: center; }
+    .btn {
+      display: inline-flex; align-items: center; gap: 10px; padding: 10px 14px; border-radius: 12px; border: 1px solid var(--ring);
+      color: var(--text); background: linear-gradient(180deg, color-mix(in hsl, var(--accent), white 70%), var(--accent));
+      box-shadow: 0 6px 20px rgba(27, 107, 255, .25);
+    }
+    .btn:hover { text-decoration: none; filter: saturate(1.05); }
+    .kicker { color: var(--accent-2); text-transform: uppercase; letter-spacing: .12em; font-weight: 700; font-size: 12px; }
+    /* Print */
+    @media print { header { position: static; } .btn { display: none; } .wrap { padding-top: 0; } }
+  </style>
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Person",
+    "name": "Aviv Ratzon",
+    "jobTitle": "PhD candidate in Computational & Theoretical Neuroscience",
+    "affiliation": { "@type": "CollegeOrUniversity", "name": "Technion – Israel Institute of Technology" },
+    "email": "mailto:aviv2545@gmail.com",
+    "telephone": "+972543112545",
+    "sameAs": [
+      "https://www.linkedin.com/in/aviv-ratzon/",
+      "https://github.com/Aviv-Ratzon",
+      "https://www.cell.com/neuron/fulltext/S0896-6273(23)00387-2",
+      "https://elifesciences.org/articles/90069"
+    ]
+  }
+  </script>
+</head>
+<body>
+  <header>
+    <nav class="nav">
+      <div class="brand">
+        <h1>Aviv Ratzon</h1>
+        <span class="tag">Computational & Theoretical Neuroscience</span>
+      </div>
+      <div class="links">
+        <a href="#publications">Publications</a>
+        <a href="#teaching">Teaching</a>
+        <a href="#experience">Experience</a>
+        <a href="#skills">Skills</a>
+        <a href="#contact">Contact</a>
+      </div>
+    </nav>
+  </header>
+
+  <main class="wrap">
+    <section class="hero">
+      <div class="card">
+        <span class="kicker">About</span>
+        <h2>PhD candidate researching <em>representational drift</em>, noisy learning & the formation of neural representations.</h2>
+        <p class="lead">I study how learning and dynamics shape population codes in the brain and in models. I enjoy theory that touches data—and technology that advances both.</p>
+        <p>
+          <a class="btn" href="#contact" title="Get in touch">Contact me</a>
+          <a style="margin-left:10px" href="CV-Aviv-Ratzon.pdf" title="Download CV">Download CV (PDF)</a>
+        </p>
+      </div>
+      <aside class="card contact" id="contact">
+        <div class="chip">📍 Haifa, Israel</div>
+        <div class="chip">✉️ <a href="mailto:aviv2545@gmail.com">aviv2545@gmail.com</a></div>
+        <div class="chip">☎️ <a href="tel:+972543112545">+972‑054‑311‑2545</a></div>
+        <div class="chip">💼 <a href="https://www.linkedin.com/in/aviv-ratzon/" target="_blank" rel="noreferrer">LinkedIn</a></div>
+        <div class="chip">👨‍💻 <a href="https://github.com/Aviv-Ratzon" target="_blank" rel="noreferrer">GitHub</a></div>
+      </aside>
+    </section>
+
+    <section class="grid" id="education">
+      <div class="col-8">
+        <h3 class="section">Education</h3>
+        <div class="list">
+          <div class="item">
+            <h4>Technion — Israel Institute of Technology · <strong>Direct PhD</strong>, Computational & Theoretical Neuroscience</h4>
+            <div class="meta">Oct 2020 — Present · Expected May 2026 · Haifa, Israel</div>
+            <p>Thesis: <em>Leveraging Representational Drift to Peek Into the Brain’s Learning Algorithm</em>. Developed and applied models to analyze sparse, high‑dimensional, noisy time‑series neural recordings; studied dynamics of stochastic systems and noisy learning in feedforward/recurrent networks.</p>
+          </div>
+          <div class="item">
+            <h4>Technion — Israel Institute of Technology · <strong>B.Sc.</strong> Electrical Engineering</h4>
+            <div class="meta">Oct 2016 — Oct 2020 · Haifa, Israel</div>
+            <p>Specializations: Machine Learning, Signal Processing, Control, Biological Signal Processing.</p>
+          </div>
+        </div>
+
+        <h3 class="section" id="publications">Publications</h3>
+        <div class="list">
+          <div class="item">
+            <h4>Representational drift as a result of implicit regularization</h4>
+            <div class="meta">A. Ratzon, D. Derdikman, O. Barak · eLife, 2024 · <a href="https://elifesciences.org/articles/90069" target="_blank" rel="noreferrer">link</a></div>
+          </div>
+          <div class="item">
+            <h4>Experience, not time, determines representational drift in the hippocampus</h4>
+            <div class="meta">D. Khatib, A. Ratzon, M. Sellevoll, O. Barak, G. Morris, D. Derdikman · Neuron, 2023 · <a href="https://www.cell.com/neuron/fulltext/S0896-6273(23)00387-2" target="_blank" rel="noreferrer">link</a></div>
+          </div>
+        </div>
+
+        <h3 class="section">Conferences</h3>
+        <div class="list">
+          <div class="item"><h4>Contributed Talks</h4><div class="meta">Bernstein (2022), Janelia (2023)</div></div>
+          <div class="item"><h4>Posters</h4><div class="meta">ISFN (2022), Cosyne (2023), iNav (2024), KISN (2024), ISFN (2025)</div></div>
+          <div class="item"><h4>Summer Schools</h4><div class="meta">Neurobridges (2022), TECT (2023)</div></div>
+        </div>
+
+        <h3 class="section" id="teaching">Teaching</h3>
+        <div class="list">
+          <div class="item">
+            <h4>Teaching Assistant — Bioinformatics & Genomics in Medicine</h4>
+            <div class="meta">2025</div>
+            <p>Intro to ML methods in medical research and analysis methods for genomic data.</p>
+          </div>
+          <div class="item">
+            <h4>Teaching Assistant — Quantitative Methods for Medical Students</h4>
+            <div class="meta">2021–2024</div>
+            <p>Covers frequency‑domain analysis, regression, programming, dynamical systems, dimensionality reduction, algebra; authored exams and assignments.</p>
+          </div>
+          <div class="item">
+            <h4>Teaching Assistant — Physical Chemistry</h4>
+            <div class="meta">2024</div>
+            <p>Tutorials on differential and integral calculus.</p>
+          </div>
+          <div class="item">
+            <h4>Teaching Assistant — ISFN Data Analysis Workshop</h4>
+            <div class="meta">2022</div>
+            <p>Designed a short calcium‑imaging data analysis project; mentored a cross‑disciplinary student team.</p>
+          </div>
+        </div>
+      </div>
+
+      <aside class="col-4">
+        <h3 class="section" id="honors">Honors & Awards</h3>
+        <div class="list">
+          <div class="item"><h4>Feinsod Award — Neurology & Brain Sciences</h4><div class="meta">2025</div></div>
+          <div class="item"><h4>Gutwirth Excellence Scholarship</h4><div class="meta">2024</div></div>
+          <div class="item"><h4>Faculty Excellence Scholarship</h4><div class="meta">2024</div></div>
+        </div>
+
+        <h3 class="section" id="experience">Experience</h3>
+        <div class="list">
+          <div class="item">
+            <h4>Qualcomm — Chip Design Verification (student position)</h4>
+            <div class="meta">2019–2020 · Haifa, Israel</div>
+          </div>
+          <div class="item">
+            <h4>Qualitest — QA Engineer</h4>
+            <div class="meta">2015–2019 · Yokneam, Israel</div>
+          </div>
+          <div class="item">
+            <h4>Kidum — Psychometric (SAT‑equivalent) Teacher</h4>
+            <div class="meta">2015 · Haifa, Israel</div>
+          </div>
+        </div>
+
+        <h3 class="section" id="skills">Skills</h3>
+        <div class="list">
+          <div class="item">
+            <h4>Programming</h4>
+            <div>
+              <span class="pill">Python (NumPy, Pandas, PyTorch)</span>
+              <span class="pill">C/C++</span>
+              <span class="pill">Matlab</span>
+              <span class="pill">VHDL</span>
+            </div>
+          </div>
+          <div class="item">
+            <h4>Quantitative Methods</h4>
+            <div>
+              <span class="pill">Probability</span>
+              <span class="pill">Stochastic processes</span>
+              <span class="pill">Optimization</span>
+              <span class="pill">Monte Carlo</span>
+              <span class="pill">Linear algebra</span>
+              <span class="pill">Regression</span>
+              <span class="pill">Signal processing</span>
+            </div>
+          </div>
+          <div class="item">
+            <h4>Tools</h4>
+            <div>
+              <span class="pill">Git</span>
+              <span class="pill">Linux</span>
+              <span class="pill">LaTeX</span>
+            </div>
+          </div>
+          <div class="item">
+            <h4>Languages</h4>
+            <div>
+              <span class="pill">Hebrew (native)</span>
+              <span class="pill">English (fluent)</span>
+              <span class="pill">German (basic)</span>
+            </div>
+          </div>
+        </div>
+      </aside>
+    </section>
+
+    <p class="footer">© <span id="y"></span> Aviv Ratzon · Built for GitHub Pages · <a href="#top">Back to top ↑</a></p>
+  </main>
+
+  <script>
+    document.getElementById('y').textContent = new Date().getFullYear();
+  </script>
+</body>
+</html>
